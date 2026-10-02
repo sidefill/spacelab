@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapBill 개인정보처리방침</title>
+<meta name="description" content="영수증 가계부 앱 SnapBill의 개인정보처리방침입니다. 운영자: 스페이스 랩">
+<style>
+  :root {
+    --bg: #eaf0f3;
+    --paper: #ffffff;
+    --ink: #13222d;
+    --muted: #55656f;
+    --line: #d3dde3;
+    --soft: #f2f6f8;
+    --accent: #0a6c74;
+    --accent-ink: #ffffff;
+    --focus: #0a6c74;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1519;
+      --paper: #151f25;
+      --ink: #e6edf1;
+      --muted: #9badb8;
+      --line: #2a3943;
+      --soft: #1b272e;
+      --accent: #5cc3cc;
+      --accent-ink: #0e1519;
+      --focus: #5cc3cc;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 16px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+
+  .page { max-width: 1040px; margin: 0 auto; padding: 32px 16px 72px; }
+
+  /* ---------- 머리말 ---------- */
+  .hero { padding: 8px 4px 28px; }
+  .brand { margin: 0 0 14px; font-weight: 700; color: var(--accent); letter-spacing: 0.01em; }
+  h1 { font-size: clamp(1.7rem, 4.6vw, 2.5rem); line-height: 1.25; margin: 0 0 18px; font-weight: 800; letter-spacing: -0.02em; }
+  .meta { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+  .meta strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- 영수증 요약 ---------- */
+  .receipt {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 6px solid var(--accent);
+    border-radius: 4px 4px 14px 14px;
+    padding: 22px 22px 18px;
+    margin: 0 0 32px;
+    max-width: 520px;
+  }
+  .receipt h2 { all: unset; display: block; font-weight: 800; font-size: 1.05rem; margin: 0 0 4px; }
+  .receipt .sub { margin: 0 0 14px; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+  .receipt dl { margin: 0; border-top: 2px dashed var(--line); border-bottom: 2px dashed var(--line); padding: 10px 0; }
+  .row { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; font-size: 0.95rem; line-height: 1.6; }
+  .row dt { margin: 0; flex: 0 0 auto; }
+  .row .lead { flex: 1 1 12px; min-width: 12px; border-bottom: 2px dotted var(--line); transform: translateY(-4px); }
+  .row dd { margin: 0; flex: 0 1 auto; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .receipt .foot { margin: 12px 0 0; display: flex; justify-content: space-between; gap: 12px; font-size: 0.88rem; color: var(--muted); }
+
+  /* ---------- 본문 배치 ---------- */
+  .layout { display: block; }
+  nav.toc { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 20px; }
+  nav.toc p { margin: 0 0 6px; font-weight: 700; font-size: 0.95rem; }
+  nav.toc ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 14px; }
+  nav.toc a { display: block; padding: 5px 0; font-size: 0.92rem; text-decoration: none; color: var(--ink); line-height: 1.5; }
+  nav.toc a:hover { color: var(--accent); text-decoration: underline; }
+  nav.toc .n { display: inline-block; width: 1.4em; color: var(--accent); font-weight: 700; }
+
+  article.doc { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 8px 20px 28px; }
+  article.doc section { padding-top: 24px; }
+  article.doc section + section { border-top: 1px solid var(--line); margin-top: 28px; }
+  h2.sec { margin: 0 0 12px; font-size: 1.25rem; line-height: 1.4; font-weight: 800; display: flex; gap: 10px; align-items: baseline; letter-spacing: -0.01em; }
+  h2.sec .no {
+    flex: 0 0 auto; min-width: 1.9em; height: 1.9em; display: inline-grid; place-items: center;
+    background: var(--accent); color: var(--accent-ink); border-radius: 6px; font-size: 0.9rem; font-weight: 800; transform: translateY(-1px);
+  }
+  p { margin: 0.8em 0; }
+  ul { margin: 0.8em 0; padding-left: 1.25em; }
+  li { margin: 0.45em 0; }
+  li::marker { color: var(--accent); }
+  .callout { background: var(--soft); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 4px 16px; margin: 1em 0; }
+
+  /* ---------- 표 ---------- */
+  .tbl { overflow-x: auto; margin: 1em 0; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93rem; line-height: 1.65; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 700; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody td:first-child { font-weight: 600; }
+
+  /* ---------- 큰 화면: 목차를 옆에 고정 ---------- */
+  @media (min-width: 960px) {
+    .layout { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 28px; align-items: start; }
+    nav.toc { position: sticky; top: 20px; margin: 0; }
+    nav.toc ol { grid-template-columns: 1fr; }
+    article.doc { padding: 12px 36px 40px; }
+  }
+
+  /* ---------- 작은 화면: 표를 카드처럼 쌓기 ---------- */
+  @media (max-width: 640px) {
+    .page { padding: 20px 12px 56px; }
+    .receipt { padding: 18px 16px 14px; }
+    article.doc { padding: 4px 14px 22px; }
+    .tbl { overflow: visible; border: 0; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    tr { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 10px; overflow: hidden; background: var(--paper); }
+    td { display: grid; grid-template-columns: 6.2em 1fr; gap: 10px; border-bottom: 1px solid var(--line); padding: 8px 12px; }
+    td::before { content: attr(data-label); color: var(--muted); font-weight: 700; font-size: 0.85rem; }
+    tbody td:first-child { background: var(--soft); }
+    tbody tr td:last-child { border-bottom: 0; }
+    nav.toc ol { grid-template-columns: 1fr; }
+  }
+
+  footer { margin: 24px 4px 0; color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    nav.toc { display: none; }
+    article.doc, .receipt { border-color: #999; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <p class="brand">SnapBill</p>
+    <h1>개인정보처리방침</h1>
+    <p class="meta">운영자 <strong>스페이스 랩</strong><br>시행일 <strong>2026년 10월 3일</strong></p>
+  </header>
+
+  <aside class="receipt" aria-label="한눈에 보기">
+    <h2>한눈에 보기</h2>
+    <p class="sub">아래 방침의 핵심만 먼저 정리했어요. 자세한 내용은 본문을 확인해 주세요.</p>
+    <dl>
+      <div class="row"><dt>영수증 사진</dt><span class="lead" aria-hidden="true"></span><dd>운영자 서버에 보관 안 함</dd></div>
+      <div class="row"><dt>사진 판독</dt><span class="lead" aria-hidden="true"></span><dd>Google AI 서비스</dd></div>
+      <div class="row"><dt>영수증 기록 저장</dt><span class="lead" aria-hidden="true"></span><dd>내 휴대폰</dd></div>
+      <div class="row"><dt>개인정보 판매·제공</dt><span class="lead" aria-hidden="true"></span><dd>하지 않음</dd></div>
+      <div class="row"><dt>계정 삭제</dt><span class="lead" aria-hidden="true"></span><dd>앱 설정에서 직접</dd></div>
+      <div class="row"><dt>문의</dt><span class="lead" aria-hidden="true"></span><dd>sidefill@naver.com</dd></div>
+    </dl>
+    <p class="foot"><span>스페이스 랩</span><span>2026.10.03 시행</span></p>
+  </aside>
+
+  <div class="layout">
+
+    <nav class="toc" aria-label="목차">
+      <p>목차</p>
+      <ol>
+        <li><a href="#s1"><span class="n">1</span>처리 목적</a></li>
+        <li><a href="#s2"><span class="n">2</span>처리하는 항목</a></li>
+        <li><a href="#s3"><span class="n">3</span>보유 기간과 파기</a></li>
+        <li><a href="#s4"><span class="n">4</span>위탁과 국외 이전</a></li>
+        <li><a href="#s5"><span class="n">5</span>광고 식별자</a></li>
+        <li><a href="#s6"><span class="n">6</span>이용자의 권리</a></li>
+        <li><a href="#s7"><span class="n">7</span>안전성 확보 조치</a></li>
+        <li><a href="#s8"><span class="n">8</span>책임자와 고충 처리</a></li>
+        <li><a href="#s9"><span class="n">9</span>방침의 변경</a></li>
+      </ol>
+    </nav>
+
+    <article class="doc">
+
+      <section>
+        <p>스페이스 랩(이하 "운영자")은 영수증 가계부 앱 SnapBill(이하 "앱")을 이용하는 분의 개인정보를 「개인정보 보호법」에 따라 보호하기 위해 이 개인정보처리방침을 정해 공개합니다.</p>
+        <div class="callout">
+          <p>앱은 영수증 기록을 기본적으로 이용자의 휴대폰에만 저장합니다. 운영자의 서버(Google Firebase)에는 로그인, 스캔 횟수, 결제 확인에 필요한 최소한의 정보만 저장합니다.</p>
+        </div>
+      </section>
+
+      <section id="s1">
+        <h2 class="sec"><span class="no">1</span>개인정보의 처리 목적</h2>
+        <p>운영자는 다음 목적으로만 개인정보를 처리하며, 목적이 바뀌면 미리 알리고 필요한 경우 동의를 받습니다.</p>
+        <ul>
+          <li>회원 식별과 로그인: 구글 계정으로 로그인한 이용자를 확인하고 로그인 상태를 유지합니다.</li>
+          <li>영수증 AI 판독: 이용자가 촬영한 영수증 사진에서 날짜·상호·금액 등을 읽어 기록합니다.</li>
+          <li>스캔 횟수 관리: 무료 제공 횟수, 광고 시청 충전, 유료 충전 횟수를 관리합니다.</li>
+          <li>유료 이용권 결제 확인: 결제가 정상 완료됐는지 확인하고 중복 충전을 막습니다.</li>
+          <li>부정 이용 방지: 같은 구글 계정이 무료 횟수를 반복해서 받는 것과 광고 충전 남용을 막습니다.</li>
+          <li>구글 시트·캘린더 연동: 이용자가 요청한 경우 지출 내역을 이용자 본인의 구글 시트와 캘린더에 기록합니다.</li>
+          <li>광고 제공: 무료 이용을 위한 광고를 보여줍니다.</li>
+        </ul>
+      </section>
+
+      <section id="s2">
+        <h2 class="sec"><span class="no">2</span>처리하는 개인정보 항목과 수집 방법</h2>
+        <p>운영자는 구글 로그인, 이용자의 앱 사용, 광고·결제 SDK의 자동 처리로 아래 정보를 처리합니다. 로그인하지 않은 이용자(둘러보기)는 영수증 촬영·판독·충전을 이용할 수 없습니다.</p>
+
+        <div class="tbl">
+        <table>
+          <thead>
+            <tr><th>구분</th><th>항목</th><th>저장 위치</th><th>수집 방법</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="구분">계정</td><td data-label="항목">구글 계정 이름, 이메일, 프로필 사진</td><td data-label="저장 위치">이용자 휴대폰</td><td data-label="수집 방법">구글 로그인</td></tr>
+            <tr><td data-label="구분">계정</td><td data-label="항목">서비스 이용자 식별번호(Firebase uid), 로그인 계정 정보(이메일 등 Firebase Authentication이 로그인 때 보관하는 정보)</td><td data-label="저장 위치">운영자 서버(Firebase Authentication)</td><td data-label="수집 방법">구글 로그인</td></tr>
+            <tr><td data-label="구분">부정 이용 방지</td><td data-label="항목">구글 계정 식별번호(이메일이 아닌 구글이 부여한 번호), 무료 지급 시각, 탈퇴 시각</td><td data-label="저장 위치">운영자 서버(Firestore, 서울)</td><td data-label="수집 방법">첫 로그인·계정 삭제 시 자동 생성</td></tr>
+            <tr><td data-label="구분">이용 기록</td><td data-label="항목">남은 스캔 횟수, 광고 충전 횟수·시각, 생성·수정 시각</td><td data-label="저장 위치">운영자 서버(Firestore, 서울)</td><td data-label="수집 방법">앱 이용 시 자동 생성</td></tr>
+            <tr><td data-label="구분">결제</td><td data-label="항목">결제번호(구매 토큰), 상품 ID, 결제 시각, 결제한 계정(서비스 이용자 식별번호)과의 연결, 마지막 결제번호</td><td data-label="저장 위치">운영자 서버(Firestore, 서울)</td><td data-label="수집 방법">Google Play 결제 완료 시</td></tr>
+            <tr><td data-label="구분">영수증</td><td data-label="항목">영수증 사진, 날짜, 상호, 금액, 카테고리, 메모</td><td data-label="저장 위치">이용자 휴대폰</td><td data-label="수집 방법">이용자 촬영·입력</td></tr>
+            <tr><td data-label="구분">설정</td><td data-label="항목">월 지출 예산, 연결한 구글 시트 이름·ID, 캘린더 연동 여부, 카테고리, 언어</td><td data-label="저장 위치">이용자 휴대폰</td><td data-label="수집 방법">이용자 설정</td></tr>
+            <tr><td data-label="구분">로그인 오류 기록</td><td data-label="항목">오류 시각, 종류, 오류 코드(토큰 값은 기록하지 않음)</td><td data-label="저장 위치">이용자 휴대폰(최근 30건)</td><td data-label="수집 방법">자동 생성</td></tr>
+            <tr><td data-label="구분">계정 삭제 진행 정보</td><td data-label="항목">서비스 이용자 식별번호, 구글 계정 식별번호(삭제가 끝나면 지움)</td><td data-label="저장 위치">이용자 휴대폰</td><td data-label="수집 방법">계정 삭제 중 자동 생성</td></tr>
+            <tr><td data-label="구분">광고</td><td data-label="항목">광고 식별자(ADID), 기기·네트워크 정보</td><td data-label="저장 위치">Google AdMob</td><td data-label="수집 방법">광고 SDK 자동 수집</td></tr>
+            <tr><td data-label="구분">기기 확인</td><td data-label="항목">앱 무결성 확인 신호, 앱 설치 식별자</td><td data-label="저장 위치">Google(Play Integrity, Firebase)</td><td data-label="수집 방법">SDK 자동 처리</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>운영자는 결제 카드 번호 등 결제 수단 정보를 받지 않습니다. 결제는 Google Play가 처리합니다.</p>
+        <p>앱은 영수증 사진과 판독 결과를 운영자 서버에 보관하지 않습니다. 사진은 판독을 위해 Google AI 서비스로 전송된 뒤 결과만 휴대폰에 저장됩니다.</p>
+        <p>앱은 만 14세 미만 아동을 대상으로 하지 않습니다. 만 14세 이상만 이용해 주세요.</p>
+      </section>
+
+      <section id="s3">
+        <h2 class="sec"><span class="no">3</span>보유·이용 기간과 파기</h2>
+        <p>운영자는 처리 목적이 끝나면 지체 없이 파기합니다. 다만 아래 정보는 표의 기간 동안 보관합니다.</p>
+
+        <div class="tbl">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>보관 기간</th><th>이유</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="항목">서비스 이용자 식별번호, 로그인 계정 정보(Firebase Authentication), 스캔 횟수, 광고 충전 기록</td><td data-label="보관 기간">회원 탈퇴(계정 삭제) 시까지</td><td data-label="이유">서비스 제공</td></tr>
+            <tr><td data-label="항목">구글 계정 식별번호, 무료 지급 시각, 탈퇴 시각</td><td data-label="보관 기간">탈퇴 후 1년</td><td data-label="이유">무료 횟수 반복 수령 방지</td></tr>
+            <tr><td data-label="항목">결제번호, 상품 ID, 결제 시각, 결제한 계정과의 연결</td><td data-label="보관 기간">결제일로부터 5년</td><td data-label="이유">결제 확인, 중복 충전 방지, 거래 분쟁 대응</td></tr>
+            <tr><td data-label="항목">휴대폰에 저장된 정보(계정 표시 정보, 영수증, 설정)</td><td data-label="보관 기간">이용자가 삭제하거나 앱을 삭제할 때까지</td><td data-label="이유">이용자 기기에만 있음</td></tr>
+            <tr><td data-label="항목">영수증 사진 파일</td><td data-label="보관 기간">영수증이 앱에 기록된 뒤 30일이 지나면, 앱을 실행할 때 자동 삭제(판독 결과는 유지)</td><td data-label="이유">저장 공간 절약</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p><strong>로그아웃하면</strong> 휴대폰에서 이름·이메일·프로필 사진, 구글 접근 토큰, 연결한 구글 시트 이름·ID, 캘린더 연동 설정이 삭제됩니다.</p>
+        <p><strong>로그아웃해도 휴대폰에 남는 것</strong>은 월 지출 예산(편의를 위해 유지), 로그인 오류 기록(최근 30건), 서버 통신을 위해 앱이 임시로 저장한 파일입니다. 이 정보는 앱을 삭제하면 함께 사라집니다.</p>
+        <p><strong>계정을 삭제하면</strong> Firebase에 저장된 로그인 계정 정보도 함께 삭제됩니다.</p>
+        <p>파기 방법: 서버와 휴대폰의 전자 정보는 복구할 수 없는 방법으로 삭제합니다.</p>
+      </section>
+
+      <section id="s4">
+        <h2 class="sec"><span class="no">4</span>처리 위탁 및 국외 이전</h2>
+        <p>운영자는 개인정보를 제3자에게 판매하거나 제공하지 않습니다. 서비스 운영을 위해 아래 Google 서비스에 처리를 맡기며, 일부는 한국 밖 서버에서 처리될 수 있습니다.</p>
+
+        <div class="tbl">
+        <table>
+          <thead>
+            <tr><th>받는 곳</th><th>맡기는 일</th><th>보내는 정보</th><th>처리 국가</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="받는 곳">Google LLC (Firebase Authentication)</td><td data-label="맡기는 일">로그인 확인</td><td data-label="보내는 정보">구글 로그인 인증 정보, 서비스 이용자 식별번호, 로그인 계정 정보(이메일 등)</td><td data-label="처리 국가">미국 등 Google 서버 소재 국가</td></tr>
+            <tr><td data-label="받는 곳">Google LLC (Cloud Firestore)</td><td data-label="맡기는 일">스캔 횟수·결제 기록 저장</td><td data-label="보내는 정보">2장의 서버 저장 항목</td><td data-label="처리 국가">대한민국(서울)</td></tr>
+            <tr><td data-label="받는 곳">Google LLC (Firebase AI Logic, Gemini)</td><td data-label="맡기는 일">영수증 AI 판독</td><td data-label="보내는 정보">영수증 사진</td><td data-label="처리 국가">미국 등 Google 서버 소재 국가</td></tr>
+            <tr><td data-label="받는 곳">Google LLC (AdMob)</td><td data-label="맡기는 일">광고 제공</td><td data-label="보내는 정보">광고 식별자, 기기·네트워크 정보</td><td data-label="처리 국가">미국 등 Google 서버 소재 국가</td></tr>
+            <tr><td data-label="받는 곳">Google LLC (Google Play 결제)</td><td data-label="맡기는 일">결제 처리</td><td data-label="보내는 정보">결제번호, 상품 정보</td><td data-label="처리 국가">미국 등 Google 서버 소재 국가</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>이전 시점과 방법: 해당 기능을 이용할 때마다 인터넷을 통해 암호화 전송됩니다.</li>
+          <li>보유 기간: 각 Google 서비스의 정책에 따르며, Firestore와 Firebase Authentication은 3장의 기간을 따릅니다.</li>
+          <li>거부 방법: 국외 이전을 원하지 않으면 로그인·판독·광고·결제 기능을 이용하지 않을 수 있으나, 이 경우 앱의 주요 기능을 쓸 수 없습니다.</li>
+          <li>이용자가 직접 요청한 구글 시트·캘린더 기록은 이용자 본인의 구글 계정으로 전송되며, 운영자가 따로 보관하지 않습니다. 캘린더 일정 제목에는 상호와 금액이 들어갑니다.</li>
+        </ul>
+        <p>Google의 개인정보 처리는 <a href="https://policies.google.com/privacy" rel="noopener">Google 개인정보처리방침</a>을 따릅니다.</p>
+      </section>
+
+      <section id="s5">
+        <h2 class="sec"><span class="no">5</span>광고 식별자 등 자동 수집 장치와 거부 방법</h2>
+        <p>앱은 Google AdMob을 통해 이용자의 관심사에 맞춘 맞춤형 광고를 보여줍니다. 이를 위해 AdMob이 광고 식별자와 기기·네트워크 정보를 자동으로 수집합니다.</p>
+        <ul>
+          <li>맞춤형 광고 거부: Android 설정 → Google → 광고에서 "광고 ID 삭제" 또는 광고 개인 최적화를 끌 수 있습니다.</li>
+          <li>운영자는 이용 분석 도구(Firebase Analytics, Crashlytics 등)나 오류 수집 도구를 앱에 따로 설치하지 않았습니다. 다만 광고 SDK(AdMob)는 광고 제공을 위해 자체적으로 정보를 처리합니다.</li>
+        </ul>
+      </section>
+
+      <section id="s6">
+        <h2 class="sec"><span class="no">6</span>이용자의 권리와 행사 방법</h2>
+        <p>이용자는 언제든지 자신의 개인정보 열람, 정정, 삭제, 처리정지를 요구할 수 있습니다. 운영자는 요청을 받은 날부터 10일 이내에 처리하고 결과를 알립니다.</p>
+
+        <div class="tbl">
+        <table>
+          <thead>
+            <tr><th>원하는 것</th><th>방법</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="원하는 것">영수증 기록 삭제</td><td data-label="방법">앱에서 해당 영수증의 삭제(휴지통) 버튼</td></tr>
+            <tr><td data-label="원하는 것">휴대폰의 계정 정보 삭제</td><td data-label="방법">앱 설정 → 로그아웃</td></tr>
+            <tr><td data-label="원하는 것">계정과 서버 정보 삭제(탈퇴)</td><td data-label="방법">앱 설정 → 계정 삭제 또는 <a href="mailto:sidefill@naver.com">sidefill@naver.com</a>으로 요청</td></tr>
+            <tr><td data-label="원하는 것">휴대폰의 모든 앱 정보 삭제</td><td data-label="방법">앱 삭제</td></tr>
+            <tr><td data-label="원하는 것">구글 연동 해제</td><td data-label="방법">구글 계정 설정 → 보안 → 타사 앱 연결에서 SnapBill 삭제</td></tr>
+            <tr><td data-label="원하는 것">열람·정정·처리정지</td><td data-label="방법"><a href="mailto:sidefill@naver.com">sidefill@naver.com</a>으로 요청</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>계정을 삭제하면 스캔 횟수와 남은 유료 이용권은 복구되지 않습니다. 3장에 적은 부정 이용 방지 기록과 결제 기록은 정해진 기간 동안 보관 후 파기합니다.</p>
+        <p>대리인을 통해서도 요청할 수 있으며, 이 경우 위임장을 제출해야 합니다.</p>
+      </section>
+
+      <section id="s7">
+        <h2 class="sec"><span class="no">7</span>안전성 확보 조치</h2>
+        <ul>
+          <li>구글 로그인 토큰은 휴대폰의 암호화 저장소(Android Keystore 기반)에 보관합니다.</li>
+          <li>서버 데이터는 본인만 읽고, 정해진 방식으로만 바꿀 수 있도록 접근 규칙을 적용합니다.</li>
+          <li>모든 통신은 암호화(HTTPS)됩니다.</li>
+          <li>앱 무결성 확인(Firebase App Check, Play Integrity)으로 변조된 앱의 접근을 막습니다.</li>
+          <li>서버 관리 계정에는 접근 권한을 운영자 1인으로 제한합니다.</li>
+        </ul>
+      </section>
+
+      <section id="s8">
+        <h2 class="sec"><span class="no">8</span>개인정보 보호책임자와 고충 처리</h2>
+        <p>개인정보 관련 문의, 불만, 피해 구제는 아래로 연락해 주세요.</p>
+        <ul>
+          <li>개인정보 보호책임자: 스페이스 랩 대표</li>
+          <li>이메일: <a href="mailto:sidefill@naver.com">sidefill@naver.com</a></li>
+        </ul>
+        <p>개인정보 침해에 대한 상담이나 신고는 아래 기관에도 할 수 있습니다.</p>
+        <ul>
+          <li>개인정보침해신고센터: 국번 없이 118 (<a href="https://privacy.kisa.or.kr" rel="noopener">privacy.kisa.or.kr</a>)</li>
+          <li>개인정보 분쟁조정위원회: 1833-6972 (<a href="https://www.kopico.go.kr" rel="noopener">kopico.go.kr</a>)</li>
+          <li>대검찰청: 1301, 경찰청: 182</li>
+        </ul>
+      </section>
+
+      <section id="s9">
+        <h2 class="sec"><span class="no">9</span>처리방침의 변경</h2>
+        <p>이 처리방침은 2026년 10월 3일부터 적용됩니다. 내용이 바뀌면 시행 7일 전에 앱과 이 페이지에 알립니다.</p>
+
+        <div class="tbl">
+        <table>
+          <thead>
+            <tr><th>버전</th><th>시행일</th><th>변경 내용</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="버전">1.0</td><td data-label="시행일">2026년 10월 3일</td><td data-label="변경 내용">최초 제정</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+    </article>
+  </div>
+
+  <footer>
+    SnapBill 운영자 스페이스 랩<br>
+    문의 <a href="mailto:sidefill@naver.com">sidefill@naver.com</a>
+  </footer>
+
+</div>
+</body>
+</html>
