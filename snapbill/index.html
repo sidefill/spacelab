@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapBill | 영수증 자동 기록 가계부 앱 - Space Lab</title>
+    <meta name="description" content="SnapBill은 영수증을 촬영하면 AI가 날짜·상호·금액을 읽어 내 구글 시트와 캘린더에 기록해 주는 가계부 앱입니다. 운영자: 스페이스 랩">
+    <style>
+        /* 루트 index.html(Space Lab)과 같은 그라데이션 배경·카드 스타일 */
+        body {
+            margin: 0;
+            font-family: 'Pretendard', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.7;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        a {
+            color: #38bdf8;
+            text-underline-offset: 3px;
+        }
+
+        a:focus-visible {
+            outline: 2px solid #00d2ff;
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 72px 20px 32px;
+        }
+
+        .header .brand {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #a0aec0;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 2px;
+            color: #00d2ff;
+            text-shadow: 0 2px 10px rgba(0, 210, 255, 0.3);
+        }
+
+        .header .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            max-width: 560px;
+            margin: 12px auto 0;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #00d2ff;
+            color: #0f2027;
+        }
+
+        .btn-primary:hover {
+            background: #38bdf8;
+        }
+
+        .btn-secondary {
+            background: rgba(0, 210, 255, 0.1);
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 210, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #38bdf8;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            margin: 22px 0 4px;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        .card p,
+        .card li {
+            color: #cbd5e1;
+            font-size: 0.97rem;
+        }
+
+        .card p {
+            margin: 6px 0;
+        }
+
+        .card ul {
+            margin: 10px 0;
+            padding-left: 1.2em;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        th,
+        td {
+            text-align: left;
+            vertical-align: top;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.06);
+            color: #e2e8f0;
+            white-space: nowrap;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        tbody td:first-child {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .notice {
+            background: rgba(0, 210, 255, 0.08);
+            border-left: 4px solid #00d2ff;
+            border-radius: 0 10px 10px 0;
+            padding: 6px 16px;
+            margin: 16px 0 4px;
+        }
+
+        .shots {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+        }
+
+        .shots img {
+            height: 360px;
+            width: auto;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex: 0 0 auto;
+        }
+
+        .contact {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+
+        .contact p {
+            color: #cbd5e1;
+            margin: 6px 0;
+        }
+
+        .contact a.mail {
+            color: #00d2ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: rgba(0, 210, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .contact a.mail:hover {
+            background: rgba(0, 210, 255, 0.3);
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #a0aec0;
+        }
+
+        @media (max-width: 640px) {
+            .table-wrap {
+                overflow: visible;
+                border: 0;
+            }
+
+            table,
+            tbody,
+            tr,
+            td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                white-space: nowrap;
+            }
+
+            tr {
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                margin: 0 0 12px;
+                overflow: hidden;
+            }
+
+            td {
+                display: grid;
+                grid-template-columns: 5.2em 1fr;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            td::before {
+                content: attr(data-label);
+                color: #a0aec0;
+                font-weight: 700;
+                font-size: 0.85rem;
+            }
+
+            tbody td:first-child {
+                background: rgba(255, 255, 255, 0.06);
+            }
+
+            tbody tr td:last-child {
+                border-bottom: 0;
+            }
+
+            .header {
+                padding-top: 48px;
+            }
+
+            .header h1 {
+                font-size: 2.6rem;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <p class="brand">SPACE LAB</p>
+        <h1>SnapBill</h1>
+        <p class="tagline">영수증을 찍으면 AI가 읽어, 내 구글 시트와 캘린더에 자동으로 기록해 주는 가계부 앱</p>
+        <div class="buttons">
+            <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.spacelab.smartreceipt" rel="noopener">Google Play에서 받기</a>
+            <a class="btn btn-secondary" href="privacy.html">개인정보처리방침</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card">
+            <h2>SnapBill이란?</h2>
+            <p>SnapBill은 스페이스 랩이 만든 영수증 가계부 앱입니다. 종이 영수증을 촬영하면 AI가 날짜, 상호, 금액, 카테고리를 읽어 기록하고, 원하는 경우 이용자 본인의 구글 시트와 구글 캘린더에도 남겨 지출을 한눈에 볼 수 있게 도와줍니다.</p>
+        </div>
+
+        <div class="card">
+            <h2>주요 기능</h2>
+
+            <h3>영수증 AI 판독</h3>
+            <p>영수증을 촬영하거나 사진을 불러오면 AI가 날짜, 상호, 금액, 카테고리를 자동으로 읽어 줍니다. 읽은 내용은 저장하기 전에 직접 고칠 수 있습니다.</p>
+
+            <h3>구글 시트에 기록</h3>
+            <p>선택한 영수증을 내 구글 시트에 기록합니다. 새 시트를 만들거나 SnapBill로 만든 시트에 이어서 추가할 수 있고, 월별 탭과 종합 대시보드(차트)가 자동으로 만들어집니다. 앱의 리포트 화면에서 기록한 시트의 내용을 다시 불러와 볼 수도 있습니다.</p>
+
+            <h3>구글 캘린더 일정</h3>
+            <p>지출을 내 구글 캘린더에 일정으로 등록하고(선택 기능), 앱의 캘린더 화면에서 일정을 보고 추가·삭제할 수 있습니다. 내일 일정은 알림으로 알려 줍니다.</p>
+
+            <h3>스캔 횟수</h3>
+            <p>처음에는 무료 스캔 횟수가 제공되며, 광고를 시청하거나 유료 충전권을 구매해 횟수를 더할 수 있습니다.</p>
+        </div>
+
+        <!--
+            [스크린샷 자리] 이미지를 받으면 아래 블록의 주석을 풀고 파일 경로를 넣어 주세요.
+            이미지가 없는 동안은 이 영역이 화면에 나오지 않습니다.
+            <div class="card">
+                <h2>앱 화면</h2>
+                <div class="shots">
+                    <img src="screenshots/01-scan.png" alt="영수증을 촬영해 판독하는 화면">
+                    <img src="screenshots/02-sheet.png" alt="구글 시트에 기록한 결과">
+                    <img src="screenshots/03-calendar.png" alt="캘린더 일정 화면">
+                </div>
+            </div>
+        -->
+
+        <div class="card" id="google-data">
+            <h2>구글 데이터 사용</h2>
+            <p>SnapBill은 이용자가 구글 로그인 때 허용한 경우에만 아래 구글 권한을 사용하며, 표에 적은 목적으로만 사용합니다.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>구글 권한</th>
+                            <th>사용 목적</th>
+                            <th>접근 범위</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="구글 권한">구글 시트<br>(spreadsheets)</td>
+                            <td data-label="사용 목적">선택한 영수증 내역을 내 구글 시트에 기록하고, 앱의 리포트·월별·가져오기 화면에서 그 시트의 내용을 읽어 보여 줍니다.</td>
+                            <td data-label="접근 범위">이용자가 연결하거나 앱이 만든 시트에 한해 읽기·쓰기</td>
+                        </tr>
+                        <tr>
+                            <td data-label="구글 권한">구글 드라이브 — SnapBill이 만든 파일<br>(drive.file)</td>
+                            <td data-label="사용 목적">SnapBill이 만든 시트의 목록을 보여 주어 이용자가 고를 수 있게 합니다.</td>
+                            <td data-label="접근 범위">SnapBill이 만들었거나 이용자가 앱으로 연 파일만 해당. 이용자의 다른 파일에는 접근하지 않습니다.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="구글 권한">구글 캘린더 일정<br>(calendar.events)</td>
+                            <td data-label="사용 목적">지출 일정 등록(선택 기능), 앱의 캘린더 화면에서 일정 조회·추가·삭제, 내일 일정 알림</td>
+                            <td data-label="접근 범위">일정의 조회·등록·삭제만 합니다. 캘린더 자체의 생성·삭제·공유 설정은 하지 않습니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul>
+                <li>구글 시트·캘린더 데이터는 이용자의 휴대폰과 구글 사이에서만 오가며, 운영자의 서버로 전송되거나 저장되지 않고 운영자는 열람하지 않습니다.</li>
+                <li>구글 사용자 데이터를 광고에 사용하거나 판매·양도하지 않으며, 인공지능 모델의 개발·학습에도 사용하지 않습니다.</li>
+                <li>구글 연동은 언제든지 구글 계정 설정 → 보안 → 타사 앱 연결에서 SnapBill을 삭제해 해제할 수 있습니다.</li>
+            </ul>
+
+            <div class="notice">
+                <p>SnapBill의 Google API 데이터 사용은 제한적 사용 요건을 포함한 <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API 서비스 사용자 데이터 정책</a>을 준수합니다.</p>
+            </div>
+            <p>자세한 내용은 <a href="privacy.html#s9">개인정보처리방침의 9장 구글 사용자 데이터의 사용</a>을 확인해 주세요.</p>
+        </div>
+
+        <div class="card">
+            <h2>개인정보 보호</h2>
+            <p>영수증 기록은 기본적으로 이용자의 휴대폰에만 저장됩니다. 운영자의 서버(Google Firebase)에는 로그인, 스캔 횟수, 결제 확인에 필요한 최소한의 정보만 저장하며, 영수증 사진은 운영자 서버에 보관하지 않습니다. 앱의 설정에서 계정을 직접 삭제할 수 있습니다.</p>
+            <p><a href="privacy.html">개인정보처리방침 전문 보기</a></p>
+        </div>
+    </div>
+
+    <div class="contact">
+        <h2 style="margin-top: 0;">운영자 및 문의</h2>
+        <p>운영자: 스페이스 랩 (Space Lab)</p>
+        <p>앱 이용 및 개인정보 관련 문의는 아래 이메일로 연락해 주세요.</p>
+        <a class="mail" href="mailto:sidefill@naver.com">sidefill@naver.com</a>
+        <p style="margin-top: 22px;"><a href="https://play.google.com/store/apps/details?id=com.spacelab.smartreceipt" rel="noopener">Google Play 스토어</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="../index.html">Space Lab 소개</a></p>
+    </div>
+
+    <footer>
+        &copy; 2026 Space Lab. All Rights Reserved.
+    </footer>
+</body>
+
+</html>
